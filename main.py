@@ -1,5 +1,3 @@
-from importlib.metadata import requires
-from urllib import response
 from dotenv import load_dotenv
 import os
 
