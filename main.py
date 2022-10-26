@@ -5,6 +5,15 @@ import os
 
 from googleapiclient.discovery import build
 
+def get_channel_stats(youtube, channel_id):
+  request = youtube.channels().list(
+    part='snippet,contentDetails,statistics',
+    id=channel_id
+  )
+  response = request.execute()
+
+  return response
+
 def main():
   load_dotenv()
   yt_api_key = os.getenv('YOUTUBE_API_KEY')
