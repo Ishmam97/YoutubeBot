@@ -21,6 +21,8 @@ def main():
   channel_id = "UCxeOc7eFxq37yW_Nc-69deA"
 
   youtube = build('youtube', 'v3', developerKey=yt_api_key)
+
+  print(get_channel_stats(youtube, channel_id))
   
 
 if __name__ == "__main__":
