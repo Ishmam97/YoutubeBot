@@ -23,6 +23,19 @@ def get_channel_activities(youtube, channel_id):
 
   return response
 
+#given vid find related vids
+def get_related_videos(youtube, video_id):
+  request = youtube.search().list(
+    part="snippet",
+    relatedToVideoId=video_id,
+    type="video"
+  )
+  response = request.execute()
+
+  return response
+
+#take vid ids from recent activity and call relatedVids with VIDs
+
 def main():
   load_dotenv()
   yt_api_key = os.getenv('YOUTUBE_API_KEY')
@@ -34,6 +47,7 @@ def main():
 
   # pprint(get_channel_activities(youtube, channel_id))
   # pprint(get_channel_stats(youtube, channel_id))
+  pprint(get_related_videos(youtube, video_id))
 
 if __name__ == "__main__":
   main()
