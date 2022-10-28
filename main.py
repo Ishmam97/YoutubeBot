@@ -58,7 +58,8 @@ def main():
 
   # pprint(get_channel_activities(youtube, channel_id))
   # pprint(get_channel_stats(youtube, channel_id))
-  pprint(get_related_videos(youtube, video_id))
+  # pprint(get_related_videos(youtube, video_id))
+  print(get_recent_video_ids(youtube, channel_id))
 
 if __name__ == "__main__":
   main()
