@@ -45,7 +45,9 @@ def get_related_videos(youtube, video_id):
 
   return response
 
+#TODO: 
 #take vid ids from recent activity and call relatedVids with VIDs
+#function for saving video information as csv/to database
 
 def main():
   load_dotenv()
