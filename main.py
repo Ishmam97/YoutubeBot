@@ -4,6 +4,7 @@ from pprint import pprint
 
 from googleapiclient.discovery import build
 
+#gets channel statistics
 def get_channel_stats(youtube, channel_id):
   request = youtube.channels().list(
     part='statistics',
@@ -13,15 +14,25 @@ def get_channel_stats(youtube, channel_id):
 
   return response
 
+#gets latest videos of chanel
 def get_channel_activities(youtube, channel_id):
   request = youtube.activities().list(
     part='snippet,contentDetails',
     channelId=channel_id,
-    maxResults=1
+    maxResults=15
   )
   response = request.execute()
 
   return response
+
+#get latest video ids of channels
+def get_recent_video_ids(youtube, channel_id):
+  activities = get_channel_activities(youtube, channel_id)
+  ids = []
+  for activity in activities['items']:
+    ids.append(activity['contentDetails']['upload']['videoId'])
+  
+  return ids
 
 #given vid find related vids
 def get_related_videos(youtube, video_id):
@@ -47,7 +58,8 @@ def main():
 
   # pprint(get_channel_activities(youtube, channel_id))
   # pprint(get_channel_stats(youtube, channel_id))
-  pprint(get_related_videos(youtube, video_id))
+  # pprint(get_related_videos(youtube, video_id))
+  print(get_recent_video_ids(youtube, channel_id))
 
 if __name__ == "__main__":
   main()
