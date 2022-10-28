@@ -25,7 +25,14 @@ def get_channel_activities(youtube, channel_id):
 
   return response
 
-#get latest video ids
+#get latest video ids of channels
+def get_recent_video_ids(youtube, channel_id):
+  activities = get_channel_activities(youtube, channel_id)
+  ids = []
+  for activity in activities['items']:
+    ids.append(activity['contentDetails']['upload']['videoId'])
+  
+  return ids
 
 #given vid find related vids
 def get_related_videos(youtube, video_id):
