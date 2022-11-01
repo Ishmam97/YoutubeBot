@@ -5,6 +5,7 @@ from pprint import pprint
 from googleapiclient.discovery import build
 
 #gets channel statistics
+#uses channel id to retreive channel statistics as JSON/dict
 def get_channel_stats(youtube, channel_id):
   request = youtube.channels().list(
     part='statistics',
@@ -14,7 +15,7 @@ def get_channel_stats(youtube, channel_id):
 
   return response
 
-#gets latest videos of chanel
+#gets latest videos of channel
 def get_channel_activities(youtube, channel_id):
   request = youtube.activities().list(
     part='snippet,contentDetails',
@@ -45,8 +46,9 @@ def get_related_videos(youtube, video_id):
 
   return response
 
-#TODO: 
 #take vid ids from recent activity and call relatedVids with VIDs
+
+#TODO: 
 #function for saving video information as csv/to database
 
 def main():
