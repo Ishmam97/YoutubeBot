@@ -13,7 +13,9 @@ The YouTube Content Discovery Bot (CDB) will collect relevant data from YouTube 
 * suspicious score (above/below a user-specified threshold or a range)
 * whether or not part of a commenter mob
 * subscriptions and favorites of a channel (see image below)
-[image here]
+
+<img width="1389" alt="Screen Shot 2022-10-06 at 6 17 51 PM" src="https://user-images.githubusercontent.com/43916219/199275534-455c7fca-43fb-4517-bab1-16040e9f2e43.png">
+
 
 The CDB will identify relevant data and populate a Smart Tracker in the VTracker application. 
 
