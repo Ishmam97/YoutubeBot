@@ -50,19 +50,33 @@ def get_related_videos(video_id):
 
   return response
 
+# gets channel subscriptions
+def get_channel_subscriptions(channel_id):
+  request = youtube.channelSections().list(
+    part='contentDetails',
+    channelId=channel_id
+  )
+  response = request.execute()
+
+  return response
+
+#to do
+#separate discovery functions from main.py
 #take vid ids from recent activity and call relatedVids with VIDs
 
 #TODO: 
 #function for saving video information as csv/to database
 
 def main():
-  
-  channel_id = "UCxeOc7eFxq37yW_Nc-69deA"
+  channel_id = 'UC8p1vwvWtl6T73JiExfWs1g'
+  # channel_id = "UCxeOc7eFxq37yW_Nc-69deA"
   video_id = "g7o2Rr1dsXQ"
-  pprint(get_channel_activities(channel_id))
+  # pprint(get_channel_activities(channel_id))
   # pprint(get_channel_stats(channel_id))
   # pprint(get_related_videos(video_id))
   # print(get_recent_video_ids(channel_id))
+  pprint(get_channel_subscriptions(channel_id))
+
 
 if __name__ == "__main__":
   main()
