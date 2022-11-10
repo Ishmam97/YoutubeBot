@@ -52,11 +52,23 @@ def get_related_videos(video_id):
 
 # gets list of channels the target is subscribed to
 def get_channel_subscriptions(channel_id):
-  request = youtube.channelSections().list(
-    part='contentDetails',
-    channelId=channel_id
-  )
-  response = request.execute()
+  try:
+    request = youtube.subscriptions().list(
+      part='snippet',
+      channelId=channel_id,
+    )
+    response = request.execute()
+
+    subscribed_channels = []
+
+    for item in response['items']:
+      subscribed_channels.append(item['snippet']['channelId'])
+
+    return subscribed_channels
+    
+  except:
+    print("error: subscription list is private")
+    return None
 
   return response
 
@@ -92,8 +104,8 @@ def main():
   # pprint(get_channel_stats(channel_id))
   # pprint(get_related_videos(video_id))
   # print(get_recent_video_ids(channel_id))
-  # pprint(get_channel_subscriptions(channel_id))
-  pprint(get_featured_channels(channel_id))
+  pprint(get_channel_subscriptions(channel_id))
+  # pprint(get_featured_channels(channel_id))
 
 
 if __name__ == "__main__":
