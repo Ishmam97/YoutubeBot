@@ -52,17 +52,14 @@ def get_related_videos(video_id):
 
 # gets list of channels the target is subscribed to
 def get_channel_subscriptions(channel_id):
-  #try request and catch error
-  try:
-    request = youtube.subscriptions().list(
-      part='snippet',
-      channelId=channel_id,
-    )
-    response = request.execute()
-    return response
-  except:
-    print("Error: Unable to get channel subscriptions")
-    return None
+  request = youtube.channelSections().list(
+    part='contentDetails',
+    channelId=channel_id
+  )
+  response = request.execute()
+
+  return response
+
 
 # gets list of featured channels on the target channel
 def get_featured_channels(channel_id):
