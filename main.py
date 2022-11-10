@@ -62,7 +62,7 @@ def get_channel_subscriptions(channel_id):
     subscribed_channels = []
 
     for item in response['items']:
-      subscribed_channels.append(item['snippet']['channelId'])
+      subscribed_channels.append(item['snippet']['resourceId']['channelId'])
 
     return subscribed_channels
     
