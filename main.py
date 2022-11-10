@@ -50,15 +50,35 @@ def get_related_videos(video_id):
 
   return response
 
-# gets channel subscriptions
+# gets list of channels the target is subscribed to
 def get_channel_subscriptions(channel_id):
+  #try request and catch error
+  try:
+    request = youtube.subscriptions().list(
+      part='snippet',
+      channelId=channel_id,
+    )
+    response = request.execute()
+    return response
+  except:
+    print("Error: Unable to get channel subscriptions")
+    return None
+
+# gets list of featured channels on the target channel
+def get_featured_channels(channel_id):
   request = youtube.channelSections().list(
     part='contentDetails',
     channelId=channel_id
   )
   response = request.execute()
+  featured_channels = []
+  for item in response['items']:
+    if 'contentDetails' in item:
+      if 'channels' in item['contentDetails']:
+        for channel in item['contentDetails']['channels']:
+          featured_channels.append(channel)
 
-  return response
+  return featured_channels
 
 #to do
 #separate discovery functions from main.py
@@ -68,14 +88,15 @@ def get_channel_subscriptions(channel_id):
 #function for saving video information as csv/to database
 
 def main():
-  channel_id = 'UC8p1vwvWtl6T73JiExfWs1g'
+  channel_id = 'UC3prwMn9aU2z5Y158ZdGyyA'
   # channel_id = "UCxeOc7eFxq37yW_Nc-69deA"
   video_id = "g7o2Rr1dsXQ"
   # pprint(get_channel_activities(channel_id))
   # pprint(get_channel_stats(channel_id))
   # pprint(get_related_videos(video_id))
   # print(get_recent_video_ids(channel_id))
-  pprint(get_channel_subscriptions(channel_id))
+  # pprint(get_channel_subscriptions(channel_id))
+  pprint(get_featured_channels(channel_id))
 
 
 if __name__ == "__main__":
