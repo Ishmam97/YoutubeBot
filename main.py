@@ -68,7 +68,7 @@ def get_channel_subscriptions(channel_id):
     
   except:
     print("error: subscription list is private")
-    return None
+    return []
 
   return response
 
