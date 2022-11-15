@@ -90,12 +90,28 @@ def get_featured_channels(channel_id):
 
   return featured_channels
 
-#to do
-#separate discovery functions from main.py
-#take vid ids from recent activity and call relatedVids with VIDs
+def discover_videos(video_id):
+  #keyword extraction
+  #targetted search
+  related = get_related_videos(video_id)
+  videos = []
+  for item in related['items']:
+    video = {}
+    video['id'] = item['id']['videoId']
+    video['channelId'] = item['snippet']['channelId']
+    video['title'] = item['snippet']['title']
+    video['description'] = item['snippet']['description']
+    video['publishedAt'] = item['snippet']['publishedAt']
+    video['thumbnail'] = item['snippet']['thumbnails']['medium']['url']
+    videos.append(video)
+  print(f'{len(videos)} videos discovered')
+
+  return videos
 
 #TODO: 
 #function for saving video information as csv/to database
+#separate discovery functions from main.py
+#take vid ids from recent activity and call relatedVids with VIDs
 
 def main():
   channel_id = 'UC3prwMn9aU2z5Y158ZdGyyA'
@@ -105,9 +121,9 @@ def main():
   # pprint(get_channel_stats(channel_id))
   # pprint(get_related_videos(video_id))
   # print(get_recent_video_ids(channel_id))
-  pprint(get_channel_subscriptions(channel_id))
+  # pprint(get_channel_subscriptions(channel_id))
   # pprint(get_featured_channels(channel_id))
-
+  pprint(discover_videos(video_id)[0])  
 
 if __name__ == "__main__":
   main()
