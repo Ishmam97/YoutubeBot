@@ -44,7 +44,8 @@ def get_related_videos(video_id):
   request = youtube.search().list(
     part="snippet",
     relatedToVideoId=video_id,
-    type="video"
+    type="video",
+    maxResults=50
   )
   response = request.execute()
 
