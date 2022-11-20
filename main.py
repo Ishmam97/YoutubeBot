@@ -110,15 +110,13 @@ def discover_videos(video_id):
 
   return videos
 
-import csv
-
+#function for saving video information as csv/to database
 def save_video_to_csv(videos):
   time_now = datetime.now().strftime("%Y-%m-%d_%H%M%S")
   file_name = f'videos_{time_now}.csv'
   pd.DataFrame(videos).to_csv(file_name, index=False)
 
 #TODO: 
-#function for saving video information as csv/to database
 #separate discovery functions from main.py
 #take vid ids from recent activity and call relatedVids with VIDs
 #discovery flow plan
