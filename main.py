@@ -1,7 +1,8 @@
 from dotenv import load_dotenv
 import os
 from pprint import pprint
-
+import pandas as pd
+from datetime import datetime
 from googleapiclient.discovery import build
 
 #gets channel statistics
