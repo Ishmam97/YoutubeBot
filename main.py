@@ -1,7 +1,8 @@
 from dotenv import load_dotenv
 import os
 from pprint import pprint
-
+import pandas as pd
+from datetime import datetime
 from googleapiclient.discovery import build
 
 #gets channel statistics
@@ -103,27 +104,36 @@ def discover_videos(video_id):
     video['description'] = item['snippet']['description']
     video['publishedAt'] = item['snippet']['publishedAt']
     video['thumbnail'] = item['snippet']['thumbnails']['medium']['url']
+    video['crawlTime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     videos.append(video)
   print(f'{len(videos)} videos discovered')
 
   return videos
 
-#TODO: 
 #function for saving video information as csv/to database
+def save_video_to_csv(videos):
+  time_now = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+  file_name = f'videos_{time_now}.csv'
+  pd.DataFrame(videos).to_csv(file_name, index=False)
+
+#TODO: 
 #separate discovery functions from main.py
 #take vid ids from recent activity and call relatedVids with VIDs
+#discovery flow plan
+#1. get channel stats
+#2. get recent vids
+#3. get related vids
+#4. get channel subscriptions
+#5. get featured channels
+#6. get channel stats for each channel
+#7. get recent vids for each channel
 
 def main():
   channel_id = 'UC3prwMn9aU2z5Y158ZdGyyA'
   # channel_id = "UCxeOc7eFxq37yW_Nc-69deA"
   video_id = "g7o2Rr1dsXQ"
-  # pprint(get_channel_activities(channel_id))
-  # pprint(get_channel_stats(channel_id))
-  # pprint(get_related_videos(video_id))
-  # print(get_recent_video_ids(channel_id))
-  # pprint(get_channel_subscriptions(channel_id))
-  # pprint(get_featured_channels(channel_id))
-  pprint(discover_videos(video_id)[0])  
+  videos = discover_videos(video_id)
+  save_video_to_csv(videos)
 
 if __name__ == "__main__":
   main()
