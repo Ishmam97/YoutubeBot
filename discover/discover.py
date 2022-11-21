@@ -74,7 +74,6 @@ def get_channel_subscriptions(channel_id):
 
   return response
 
-
 # gets list of featured channels on the target channel
 def get_featured_channels(channel_id):
   request = youtube.channelSections().list(
