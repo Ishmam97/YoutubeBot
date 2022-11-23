@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 import os
 from pprint import pprint
-import pandas as pd
 from datetime import datetime
 from googleapiclient.discovery import build
 
@@ -95,6 +94,7 @@ def discover_videos(video_id):
   #targetted search
   related = get_related_videos(video_id)
   videos = []
+  crawlTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
   for item in related['items']:
     video = {}
     video['id'] = item['id']['videoId']
@@ -103,14 +103,23 @@ def discover_videos(video_id):
     video['description'] = item['snippet']['description']
     video['publishedAt'] = item['snippet']['publishedAt']
     video['thumbnail'] = item['snippet']['thumbnails']['medium']['url']
-    video['crawlTime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    video['crawlTime'] = crawlTime
     videos.append(video)
   print(f'{len(videos)} videos discovered')
 
   return videos
 
-#function for saving video information as csv/to database
-def save_video_to_csv(videos):
-  time_now = datetime.now().strftime("%Y-%m-%d_%H%M%S")
-  file_name = f'videos_{time_now}.csv'
-  pd.DataFrame(videos).to_csv(file_name, index=False)
+def discover_channels(channels):
+  subscriptions = []
+  featured_channels = []
+
+  for channel in channels:
+    subs = get_channel_subscriptions(channel)
+    featured = get_featured_channels(channel)
+    #append if not empty
+    if subs:
+      subscriptions.append({channel:subs})
+    if featured:
+      featured_channels.append({channel:featured})
+
+  return subscriptions, featured_channels
