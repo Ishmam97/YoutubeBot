@@ -1,5 +1,6 @@
 from discover.discover import *
-from utils.download import *
+from utils.utils import *
+import pandas as pd
 
 #TODO: 
 #take vid ids from recent activity and call relatedVids with VIDs
@@ -13,12 +14,15 @@ from utils.download import *
 #6. get channel stats for each channel
 #7. get recent vids for each channel
 
+# make graph of channels
+
 def main():
-  channel_id = 'UC3prwMn9aU2z5Y158ZdGyyA'
   # channel_id = "UCxeOc7eFxq37yW_Nc-69deA"
-  video_id = "BEWz4SXfyCQ"
-  videos = discover_videos(video_id)
-  download_videos(pd.DataFrame(videos)['id'].values[0:1])
+  video_id = "CJ8y3hw6Bqo"
+  # videos = discover_videos(video_id)
+  # save_video_to_csv(videos)
+  # videos = pd.read_csv("videos_2022-11-23_144744.csv")
+  # print(len(videos['channelId'].unique()))
 
 if __name__ == "__main__":
   main()

@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 import os
 from pprint import pprint
-import pandas as pd
 from datetime import datetime
 from googleapiclient.discovery import build
 
@@ -110,8 +109,3 @@ def discover_videos(video_id):
 
   return videos
 
-#function for saving video information as csv/to database
-def save_video_to_csv(videos):
-  time_now = datetime.now().strftime("%Y-%m-%d_%H%M%S")
-  file_name = f'videos_{time_now}.csv'
-  pd.DataFrame(videos).to_csv(file_name, index=False)
