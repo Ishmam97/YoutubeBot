@@ -95,6 +95,7 @@ def discover_videos(video_id):
   #targetted search
   related = get_related_videos(video_id)
   videos = []
+  crawlTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
   for item in related['items']:
     video = {}
     video['id'] = item['id']['videoId']
@@ -103,7 +104,7 @@ def discover_videos(video_id):
     video['description'] = item['snippet']['description']
     video['publishedAt'] = item['snippet']['publishedAt']
     video['thumbnail'] = item['snippet']['thumbnails']['medium']['url']
-    video['crawlTime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    video['crawlTime'] = crawlTime
     videos.append(video)
   print(f'{len(videos)} videos discovered')
 
