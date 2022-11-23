@@ -109,3 +109,17 @@ def discover_videos(video_id):
 
   return videos
 
+def discover_channels(channels):
+  subscriptions = []
+  featured_channels = []
+
+  for channel in channels:
+    subs = get_channel_subscriptions(channel)
+    featured = get_featured_channels(channel)
+    #append if not empty
+    if subs:
+      subscriptions.append({channel:subs})
+    if featured:
+      featured_channels.append({channel:featured})
+
+  return subscriptions, featured_channels
