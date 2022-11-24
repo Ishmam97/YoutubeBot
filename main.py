@@ -23,7 +23,19 @@ def main():
   videos = pd.read_csv('videos_2022-11-23_153226.csv')
   channels = videos['channelId'].values
   subscriptions, featured_channels = discover_channels(np.unique(channels))
-  print(subscriptions)
+
+  vid_to_chan = []
+
+  for index, row in videos.iterrows():
+      vid_to_chan.append({row['id']:[row['channelId']]})
+
+  #build graph
+  G = create_graph(video_id, np.unique(videos['id'].values), color='y')
+  G = add_to_graph(G, vid_to_chan, color="b")
+  G = add_to_graph(G, subscriptions, color="r")
+  G = add_to_graph(G, featured_channels, color="g")
+
+  print_graph(G)
 
 if __name__ == "__main__":
   main()
