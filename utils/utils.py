@@ -18,3 +18,16 @@ def save_video_to_csv(videos):
   file_name = f'videos_{time_now}.csv'
   pd.DataFrame(videos).to_csv(file_name, index=False)
   return file_name
+
+# make graph of channels
+
+import networkx as nx
+import matplotlib.pyplot as plt
+
+def create_graph(parent, children, color):
+  G = nx.DiGraph()
+  G.add_node(parent)
+  for child in children:
+    G.add_node(child)
+    G.add_edge(parent, child, color=color)
+  return G
