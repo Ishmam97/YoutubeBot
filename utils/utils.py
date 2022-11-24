@@ -31,3 +31,15 @@ def create_graph(parent, children, color):
     G.add_node(child)
     G.add_edge(parent, child, color=color)
   return G
+
+#add nodes to graph
+#edges has format [{parent:[children]}]
+def add_to_graph(graph, edges, color):
+  for edge in edges:
+    for parent, children in edge.items():
+      for child in children:
+        if not graph.has_node(child):
+          graph.add_node(child)
+        if not graph.has_edge(parent, child):
+          graph.add_edge(parent, child, color=color)
+  return graph
