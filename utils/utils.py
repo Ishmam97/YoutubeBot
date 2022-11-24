@@ -45,3 +45,13 @@ def add_to_graph(graph, edges, color):
         if not graph.has_edge(parent, child):
           graph.add_edge(parent, child, color=color)
   return graph
+
+def print_graph(G):
+  plt.figure(figsize=(12, 10), dpi=80)
+  edges = G.edges()
+  colors = [G[u][v]['color'] for u,v in edges]
+
+  pos = nx.kamada_kawai_layout(G)
+  nx.draw(G, pos, edge_color=colors, with_labels=False)
+  plt.savefig("Graph.png", format="PNG")
+  plt.show()
