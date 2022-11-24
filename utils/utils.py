@@ -28,8 +28,10 @@ def create_graph(parent, children, color):
   G = nx.DiGraph()
   G.add_node(parent)
   for child in children:
-    G.add_node(child)
-    G.add_edge(parent, child, color=color)
+    if not G.has_node(child):
+      G.add_node(child)
+    if not G.has_edge(parent, child):
+      G.add_edge(parent, child, color=color)
   return G
 
 #add nodes to graph
