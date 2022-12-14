@@ -3,8 +3,7 @@ from utils.utils import *
 import pandas as pd
 import glob
 from utils.barcode import *
-import asyncio
-from tqdm import tqdm
+
 
 #TODO: 
 #take vid ids from recent activity and call relatedVids with VIDs
@@ -17,10 +16,6 @@ from tqdm import tqdm
 #5. get featured channels
 #6. get channel stats for each channel
 #7. get recent vids for each channel
-
-def run_videos_to_barcodes(files):
-  for i in tqdm(range(1, len(files))):
-    vid2barcode(files[i])
 
 def main():
   # channel_id = "UCxeOc7eFxq37yW_Nc-69deA"

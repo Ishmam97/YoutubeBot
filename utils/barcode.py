@@ -1,8 +1,7 @@
 import numpy as np
-import pandas as pd
 #from pytube import YouTube
 from imutils.video import FileVideoStream, FPS
-
+from tqdm import tqdm
 import os
 import json
 import logging
@@ -234,6 +233,11 @@ def vid2barcode(video_path, width = 1024, height= 440):
   moviebarcode = Moviebarcode(video_path)
   moviebarcode.generate()
   pathslip = video_path.split("\\")
-  name = SAVE_DIR + pathslip[-1] + '.png'
+  pathslip = pathslip[-1].split(".")[0]
+  name = SAVE_DIR + pathslip + '.png'
   print(name)
   moviebarcode.make_image(file_name=name)
+
+def run_videos_to_barcodes(files):
+  for i in tqdm(range(1, len(files))):
+    vid2barcode(files[i])
