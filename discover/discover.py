@@ -97,6 +97,7 @@ def discover_videos(video_id):
     video = {}
     video['id'] = item['id']['videoId']
     video['channelId'] = item['snippet']['channelId']
+    video['channelTitle'] = item['snippet']['channelTitle']
     video['title'] = item['snippet']['title']
     video['description'] = item['snippet']['description']
     video['publishedAt'] = item['snippet']['publishedAt']

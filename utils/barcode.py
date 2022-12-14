@@ -230,10 +230,10 @@ class Moviebarcode:
         pass
 
 def vid2barcode(video_path, width = 1024, height= 440):
-  SAVE_DIR = '../barcode/'
+  SAVE_DIR = './barcode/'
   moviebarcode = Moviebarcode(video_path)
   moviebarcode.generate()
-  pathslip = video_path.split("/")
-  name = SAVE_DIR + pathslip[-2] + '.png'
+  pathslip = video_path.split("\\")
+  name = SAVE_DIR + pathslip[-1] + '.png'
   print(name)
   moviebarcode.make_image(file_name=name)

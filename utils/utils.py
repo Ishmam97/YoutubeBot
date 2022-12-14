@@ -8,7 +8,8 @@ def download_videos(video_ids):
 #download videos
 def download_video(video_id):
   try:
-    yt('https://www.youtube.com/watch?v=' + video_id).streams.filter(res="144p").first().download()
+    #add file name and extension
+    yt('https://www.youtube.com/watch?v=' + video_id).streams.filter(res="144p").first().download(output_path='./videos', filename=video_id+'.3gpp')
   except:
     print("error: video not found")
 
