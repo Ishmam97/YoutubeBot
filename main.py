@@ -17,25 +17,14 @@ import pandas as pd
 
 def main():
   # channel_id = "UCxeOc7eFxq37yW_Nc-69deA"
-  video_id = "CJ8y3hw6Bqo"
+  video_id = "op4mGRTAlEY"
   # videos = discover_videos(video_id)
   # videos_file = save_video_to_csv(videos)
-  videos = pd.read_csv('videos_2022-11-23_153226.csv')
-  channels = videos['channelId'].values
-  subscriptions, featured_channels = discover_channels(np.unique(channels))
-
-  vid_to_chan = []
-
-  for index, row in videos.iterrows():
-      vid_to_chan.append({row['id']:[row['channelId']]})
-
-  #build graph
-  G = create_graph(video_id, np.unique(videos['id'].values), color='y')
-  G = add_to_graph(G, vid_to_chan, color="b")
-  G = add_to_graph(G, subscriptions, color="r")
-  G = add_to_graph(G, featured_channels, color="g")
-
-  print_graph(G)
+  
+  comments = get_comments(video_id)
+  #save comments to csv
+  pd.DataFrame(comments).to_csv("comments.csv")
+  print(comments)
 
 if __name__ == "__main__":
   main()
