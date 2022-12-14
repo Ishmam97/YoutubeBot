@@ -109,6 +109,7 @@ def discover_videos(video_id):
 
   return videos
 
+#given a list of channels, return a list of subscriptions and featured channels
 def discover_channels(channels):
   subscriptions = []
   featured_channels = []
@@ -123,3 +124,75 @@ def discover_channels(channels):
       featured_channels.append({channel:featured})
 
   return subscriptions, featured_channels
+
+
+# returns array of comments 
+def format_comment_response(response):
+  comments = []
+  for item in response['items']:
+    comment = {}
+    comment['video_id'] = item['snippet']['videoId']
+    comment['id'] = item['snippet']['topLevelComment']['snippet']['authorDisplayName']
+    comment['comment'] = item['snippet']['topLevelComment']['snippet']['textOriginal']
+    comment['likeCount'] =  item['snippet']['topLevelComment']['snippet']['likeCount']
+    comment['lastUpdated'] = item['snippet']['topLevelComment']['snippet']['updatedAt']
+    
+    replycount = item['snippet']['totalReplyCount']
+    
+    comment['replyCount'] = replycount
+   
+    if replycount>0:
+      replies = []      
+      for reply in item['replies']['comments']:
+        reply = reply['snippet']['textDisplay']
+        replies.append(reply)
+
+      comment['replies'] = replies
+
+    comments.append(comment)
+  return comments
+
+#given a video id, return a list of comments
+def get_comments(video_id):
+  try:
+    request = youtube.commentThreads().list(
+        part="snippet,replies",
+        textFormat="plainText",
+        videoId=video_id,
+        maxResults=100
+    )
+    response = request.execute()
+  except Exception as e:
+    print("error in retrieving comment for ", video_id)
+    print(e)
+    return
+  
+  comments = format_comment_response(response)
+
+  if 'nextPageToken' in response:
+    nextPageToken = response['nextPageToken']
+  while nextPageToken:
+    try:
+      request = youtube.commentThreads().list(
+        part="snippet,replies",
+        textFormat="plainText",
+        videoId=video_id,
+        maxResults=100,
+        pageToken=nextPageToken
+      )
+      response = request.execute()
+    except Exception as e:
+      print("error in retrieving comment for ", video_id)
+      print(e)
+      return
+
+    #append comments frm response to comments
+    comments += format_comment_response(response)
+
+    if 'nextPageToken' in response:
+      nextPageToken = response['nextPageToken']
+    else:
+      break
+
+  return comments
+  
